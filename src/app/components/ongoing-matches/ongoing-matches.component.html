@@ -20,9 +20,9 @@
     <div class="team">{{ match.homeTeam }}</div>
 
     <div class="score-center">
-      <span class="score">{{ match.homeGoals }}</span>
+      <span class="score">{{ match.homeGoals ?? 0}}</span>
       <span class="sep">—</span>
-      <span class="score">{{ match.awayGoals }}</span>
+      <span class="score">{{ match.awayGoals ?? 0}}</span>
     </div>
 
     <div class="team">{{ match.awayTeam }}</div>
