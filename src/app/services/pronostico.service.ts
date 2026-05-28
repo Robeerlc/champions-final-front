@@ -12,6 +12,6 @@ export class PronosticoService {
   constructor(private http: HttpClient) {}
 
   enviarPronostico(pronostico: Pronostico): Observable<any> {
-    return this.http.post(`${this.baseUrl}/pronosticos`, pronostico);
+    return this.http.post(`${this.baseUrl}/predictions`, pronostico);
   }
 }
