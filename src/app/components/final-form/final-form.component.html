@@ -22,7 +22,7 @@
     </div>
 
     <h1 class="main-title">Tu pronóstico para la <span class="gold">Final</span></h1>
-    <p class="subtitle">{{ match.startTime | date:'EEEE d MMMM yyyy, HH:mm' : 'Europe/Madrid' : 'es' }}</p>
+    <p class="subtitle">{{ match.startTime | date:'EEEE d MMMM yyyy, HH:mm' : undefined : 'es' }}</p>
 
     <!-- CABECERA PARTIDO -->
     <div class="match-hero">
@@ -72,13 +72,11 @@
         <ng-container *ngIf="isDraw">
           <div class="draw-notice">Empate — ¿quién gana en prórroga o penaltis?</div>
           <div class="toggle-row">
-            <button type="button" class="toggle-btn"
-              [class.active]="form.value.winningTeam === match.homeTeam"
+            <button type="button" class="toggle-btn" [class.active]="form.value.winningTeam === match.homeTeam"
               (click)="selectDrawWinner(match.homeTeam)">
               {{ match.homeTeam }}
             </button>
-            <button type="button" class="toggle-btn"
-              [class.active]="form.value.winningTeam === match.awayTeam"
+            <button type="button" class="toggle-btn" [class.active]="form.value.winningTeam === match.awayTeam"
               (click)="selectDrawWinner(match.awayTeam)">
               {{ match.awayTeam }}
             </button>
