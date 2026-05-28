@@ -5,11 +5,11 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatchService } from '../../services/match.service';
 import { Match } from '../../models/match.model';
 
-const LIVE_STATUSES = ['IN_PLAY', 'LIVE', 'EXTRA_TIME', 'PENALTY', 'PAUSED', 'HALFTIME'];
+const LIVE_STATUSES = ['IN_PLAY', 'LIVE', 'IN_PROGRESS', 'EXTRA_TIME', 'PENALTY', 'PAUSED', 'HALFTIME'];
 const DONE_STATUSES = ['FINISHED', 'FULL_TIME', 'SUSPENDED', 'POSTPONED'];
 const STATUS_LABELS: Record<string, string> = {
   TIMED: 'Programado', SCHEDULED: 'Programado', PENDING: 'Programado',
-  IN_PLAY: 'En juego',  LIVE: 'En juego',
+  IN_PLAY: 'En Directo', LIVE: 'En Directo', IN_PROGRESS: 'En Directo',
   PAUSED: 'Descanso',   HALFTIME: 'Descanso',
   FINISHED: 'Finalizado', FULL_TIME: 'Finalizado',
   EXTRA_TIME: 'Prórroga', PENALTY: 'Penaltis',
@@ -63,7 +63,4 @@ export class OngoingMatchesComponent implements OnInit {
     return 'scheduled';
   }
 
-  scoreVisible(match: Match): boolean {
-    return [...LIVE_STATUSES, ...DONE_STATUSES].includes(match.status);
-  }
 }

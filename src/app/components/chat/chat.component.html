@@ -13,7 +13,7 @@
         <div class="bubble">
           <div class="meta">
             <span class="username">{{ msg.username }}</span>
-            <span class="timestamp">{{ msg.timestamp | date:'HH:mm':'Europe/Madrid' }}</span>
+            <span class="timestamp">{{ msg.timestamp | date:'HH:mm':'+0200' }}</span>
           </div>
           <p class="text">{{ msg.message }}</p>
         </div>
