@@ -46,6 +46,26 @@
     text-align: center;
     margin: auto;
   }
+
+  scrollbar-width: thin;
+  scrollbar-color: #30363d transparent;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #30363d;
+    border-radius: 3px;
+
+    &:hover {
+      background: #484f58;
+    }
+  }
 }
 
 .message {

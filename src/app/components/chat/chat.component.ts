@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewChecked, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewChecked, inject, ChangeDetectionStrategy, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ChatService } from '../../services/chat.service';
@@ -19,6 +19,14 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
   authService = inject(AuthService);
   newMessage = '';
   private shouldScroll = false;
+  private atBottom = true;
+
+  constructor() {
+    effect(() => {
+      this.chatService.messages();
+      if (this.atBottom) this.shouldScroll = true;
+    });
+  }
 
   ngOnInit(): void {
     this.chatService.loadHistory();
@@ -35,6 +43,11 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
       this.scrollToBottom();
       this.shouldScroll = false;
     }
+  }
+
+  onScroll(): void {
+    const el = this.messagesContainer.nativeElement;
+    this.atBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 50;
   }
 
   send(): void {

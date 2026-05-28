@@ -8,8 +8,8 @@ export interface Match {
   apiMatchId: number;
   homeTeam: string;
   awayTeam: string;
-  homeGoals: number;
-  awayGoals: number;
+  homeGoals: number | null;
+  awayGoals: number | null;
   startTime: string;
   endTime: string;
   status: string;

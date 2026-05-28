@@ -125,7 +125,7 @@ export class FinalFormComponent implements OnInit {
       homeGoals: this.form.value.homeGoals,
       awayGoals: this.form.value.awayGoals,
       isDraw: draw,
-      winningTeam: draw ? '' : this.form.value.winningTeam
+      winningTeam: this.form.value.winningTeam
     };
 
     this.pronosticoService.enviarPronostico(pronostico).subscribe({
