@@ -1,4 +1,4 @@
-import { Injectable, isDevMode } from '@angular/core'; // <-- Añade isDevMode aquí
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { LoginRequest, RegisterRequest, AuthResponse } from '../models/match.model';
@@ -7,7 +7,7 @@ import { LoginRequest, RegisterRequest, AuthResponse } from '../models/match.mod
   providedIn: 'root'
 })
 export class AuthService {
-  private baseUrl = isDevMode() ? 'http://localhost:8080/api' : '/api';
+  private baseUrl = 'http://193.70.44.51:8080/api';
   private tokenKey = 'auth_token';
 
   constructor(private http: HttpClient) {}
