@@ -1,0 +1,6 @@
+[providers]
+node = {}
+
+[phases.build]
+dependsOn = ["install"]
+cmds = ["npm run build -- --configuration=production"]
