@@ -9,10 +9,14 @@
       <p class="empty">No hay mensajes aún.</p>
     }
     @for (msg of chatService.messages(); track msg.id) {
-      <div class="message">
-        <span class="username">{{ msg.username }}</span>
-        <span class="timestamp">{{ msg.timestamp | date:'HH:mm' }}</span>
-        <p class="text">{{ msg.message }}</p>
+      <div class="message" [class.mine]="msg.username === authService.getUsername()">
+        <div class="bubble">
+          <div class="meta">
+            <span class="username">{{ msg.username }}</span>
+            <span class="timestamp">{{ msg.timestamp | date:'HH:mm' }}</span>
+          </div>
+          <p class="text">{{ msg.message }}</p>
+        </div>
       </div>
     }
   </div>

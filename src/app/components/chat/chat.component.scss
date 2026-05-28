@@ -50,27 +50,58 @@
 
 .message {
   display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0.4rem;
+  flex-direction: column;
+  max-width: 70%;
+  align-self: flex-start;
+
+  .bubble {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 12px 12px 12px 4px;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .meta {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    margin-bottom: 0.2rem;
+  }
 
   .username {
     font-weight: 600;
     color: #58a6ff;
-    font-size: 0.875rem;
+    font-size: 0.8rem;
   }
 
   .timestamp {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     color: #6e7681;
   }
 
   .text {
-    width: 100%;
     margin: 0;
     color: #e6edf3;
     font-size: 0.9rem;
     word-break: break-word;
+  }
+
+  &.mine {
+    align-self: flex-end;
+
+    .bubble {
+      background: #1f3a5f;
+      border-color: #58a6ff44;
+      border-radius: 12px 12px 4px 12px;
+    }
+
+    .username {
+      color: #79c0ff;
+    }
+
+    .meta {
+      flex-direction: row-reverse;
+    }
   }
 }
 
