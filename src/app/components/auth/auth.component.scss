@@ -1,0 +1,235 @@
+$bg-main: #0d1117;
+$bg-card: #161b22;
+$bg-input: #0d1117;
+$border: #30363d;
+$text-primary: #ffffff;
+$text-secondary: #c9d1d9;
+$text-muted: #8b949e;
+$text-placeholder: #6e7681;
+$accent: #58a6ff;
+$accent-active: #388bfd;
+$error-bg: #1a0000;
+$error-border: #da3633;
+$error-text: #f85149;
+
+:host {
+  display: block;
+  color: $text-primary;
+}
+
+.auth-wrap {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+
+.ucl-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $text-muted;
+  margin-bottom: 1.5rem;
+
+  .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: $accent;
+    flex-shrink: 0;
+  }
+}
+
+.main-title {
+  font-size: clamp(1.8rem, 5vw, 2.4rem);
+  font-weight: 900;
+  line-height: 1.1;
+  color: $text-primary;
+  margin-bottom: 0.5rem;
+
+  .gold {
+    color: $accent;
+  }
+}
+
+.subtitle {
+  font-size: 14px;
+  color: $text-muted;
+  margin-bottom: 2rem;
+}
+
+.mode-toggle {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.75rem;
+  border-bottom: 1px solid $border;
+  padding-bottom: 1rem;
+}
+
+.toggle-btn {
+  flex: 1;
+  padding: 0.6rem 1rem;
+  border: 1px solid $border;
+  border-radius: 6px;
+  background: $bg-card;
+  color: $text-secondary;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+
+  &:hover {
+    border-color: $accent;
+    color: $accent;
+  }
+
+  &.active {
+    background: $accent-active;
+    border-color: $accent-active;
+    color: $text-primary;
+    font-weight: 500;
+  }
+}
+
+.field-group {
+  margin-bottom: 1.25rem;
+}
+
+.section-label {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $text-muted;
+  margin-bottom: 0.4rem;
+}
+
+.email-wrap {
+  display: flex;
+  align-items: stretch;
+  border: 1px solid $border;
+  border-radius: 6px;
+  overflow: hidden;
+  transition: border-color 0.2s ease;
+
+  &:focus-within {
+    border-color: $accent;
+  }
+}
+
+.username-input {
+  border: none !important;
+  border-radius: 0 !important;
+  flex: 1;
+  min-width: 0;
+
+  &:focus { box-shadow: none !important; }
+}
+
+.email-domain {
+  display: flex;
+  align-items: center;
+  padding: 0 0.75rem;
+  background: rgba(255, 255, 255, 0.04);
+  border-left: 1px solid $border;
+  color: $text-muted;
+  font-size: 13px;
+  white-space: nowrap;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.field-input {
+  width: 100%;
+  border: 1px solid $border;
+  border-radius: 6px;
+  background: $bg-input;
+  color: $text-primary;
+  padding: 0.6rem 0.9rem;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  appearance: none;
+
+  &::placeholder {
+    color: $text-placeholder;
+  }
+
+  &:focus {
+    border-color: $accent;
+    box-shadow: none;
+    background: $bg-input;
+    color: $text-primary;
+  }
+}
+
+.select-wrap {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 5px solid $text-muted;
+    pointer-events: none;
+  }
+
+  select option {
+    background-color: $bg-card;
+    color: $text-primary;
+  }
+}
+
+.error-banner {
+  background: $error-bg;
+  color: $error-text;
+  border: 1px solid $error-border;
+  border-radius: 6px;
+  padding: 0.6rem 0.9rem;
+  font-size: 13px;
+  margin-bottom: 1rem;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 0.75rem;
+  background: $accent-active;
+  color: $text-primary;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  margin-bottom: 1.25rem;
+
+  &:hover { opacity: 0.85; }
+  &:disabled { opacity: 0.4; cursor: not-allowed; }
+}
+
+.switch-link {
+  text-align: center;
+  font-size: 13px;
+  color: $text-muted;
+}
+
+.link-btn {
+  background: none;
+  border: none;
+  color: $accent;
+  font-size: 13px;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+
+  &:hover { opacity: 0.8; }
+}

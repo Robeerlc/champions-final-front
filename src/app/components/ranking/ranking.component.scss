@@ -1,0 +1,226 @@
+$bg-main: #0d1117;
+$bg-card: #161b22;
+$bg-table-header: rgba(255, 255, 255, 0.03);
+$border: #30363d;
+$border-subtle: rgba(255, 255, 255, 0.08);
+$text-primary: #ffffff;
+$text-secondary: #c9d1d9;
+$text-muted: #8b949e;
+$accent: #58a6ff;
+$cyan: #67e8f9;
+$error-bg: #1a0000;
+$error-border: #da3633;
+$error-text: #f85149;
+
+:host {
+  display: block;
+  color: $text-primary;
+}
+
+.ranking-wrap {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+
+.ranking-header {
+  margin-bottom: 1.75rem;
+}
+
+.ranking-title {
+  font-size: 2rem;
+  font-weight: 900;
+  color: $text-primary;
+  margin-bottom: 0.25rem;
+}
+
+.ranking-subtitle {
+  font-size: 14px;
+  color: $text-muted;
+}
+
+.loading-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: $text-muted;
+
+  .spinner {
+    width: 28px;
+    height: 28px;
+    border: 2px solid $border;
+    border-top-color: $accent;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 1rem;
+  }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.error-banner {
+  background: $error-bg;
+  color: $error-text;
+  border: 1px solid $error-border;
+  border-radius: 6px;
+  padding: 0.65rem 0.9rem;
+  font-size: 13px;
+}
+
+.legend-row {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: $bg-card;
+  border: 1px solid $border;
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 12px;
+  color: $text-secondary;
+
+  &.exact  { border-color: #238636; }
+  &.diff   { border-color: #9e6a03; }
+  &.winner { border-color: $border; }
+  &.none   { border-color: #da3633; }
+}
+
+.legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+
+  .exact  & { background: #3fb950; }
+  .diff   & { background: #d29922; }
+  .winner & { background: $text-muted; }
+  .none   & { background: #f85149; }
+}
+
+.table-wrapper {
+  background: $bg-card;
+  border: 1px solid $border-subtle;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  max-height: 228px;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar       { width: 6px; }
+  &::-webkit-scrollbar-track { background: $bg-card; }
+  &::-webkit-scrollbar-thumb {
+    background: $border;
+    border-radius: 10px;
+    &:hover { background: $accent; }
+  }
+}
+
+.ranking-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+
+  thead {
+    background: $bg-card;
+    border-bottom: 1px solid $border-subtle;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+
+    th {
+      padding: 12px 16px;
+      font-size: 11px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.5);
+      text-align: left;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+  }
+
+  tbody {
+    tr {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      transition: filter 0.2s ease;
+
+      &:last-child { border-bottom: none; }
+      &:hover { filter: brightness(1.15); }
+
+      &.row-exact  { background: rgba(#238636, 0.08); }
+      &.row-diff   { background: rgba(#9e6a03, 0.08); }
+      &.row-winner { background: rgba(255, 255, 255, 0.02); }
+      &.row-none   {
+        background: rgba(#da3633, 0.07);
+        .col-points { color: #f85149; }
+        .col-name   { color: $text-muted; }
+      }
+    }
+
+    td {
+      padding: 14px 16px;
+      text-align: left;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+}
+
+.col-pos    { width: 52px; }
+.col-name   { width: auto; }
+.col-points { width: 80px; }
+.col-stat   {
+  width: 56px;
+  text-align: center !important;
+}
+
+.position {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 900;
+  color: $text-muted;
+
+  &.gold   { background: rgba(#c8a84b, 0.25); color: #c8a84b; border: 1px solid rgba(#c8a84b, 0.4); }
+  &.silver { background: rgba(#c0c0c0, 0.2);  color: #c0c0c0; border: 1px solid rgba(#c0c0c0, 0.35); }
+  &.bronze { background: rgba(#cd7f32, 0.2);  color: #cd7f32; border: 1px solid rgba(#cd7f32, 0.35); }
+}
+
+.col-name {
+  font-weight: 700;
+  color: $text-primary;
+  font-size: 14px;
+}
+
+.col-points {
+  font-size: 24px;
+  font-weight: 900;
+  color: $text-primary;
+  white-space: nowrap;
+}
+
+.col-stat {
+  font-size: 14px;
+  color: $text-secondary;
+  text-align: center;
+}
+
+.empty-state {
+  padding: 3rem;
+  text-align: center;
+  color: $text-muted;
+  font-size: 14px;
+}

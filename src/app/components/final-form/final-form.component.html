@@ -1,0 +1,116 @@
+<div class="final-wrap">
+
+  <!-- LOADING -->
+  <div class="loading-state" *ngIf="loading">
+    <div class="spinner"></div>
+    <p>Cargando partido de la final...</p>
+  </div>
+
+  <!-- ERROR CARGA -->
+  <div class="error-banner" *ngIf="!loading && error && !match">
+    <span>{{ error }}</span>
+  </div>
+
+  <!-- FORMULARIO -->
+  <ng-container *ngIf="!loading && match && !submitted">
+
+    <div class="ucl-badge">
+      <span class="dot"></span>
+      UEFA Champions League
+      <span class="dot"></span>
+      Gran Final
+    </div>
+
+    <h1 class="main-title">Tu pronóstico para la <span class="gold">Final</span></h1>
+    <p class="subtitle">{{ match.startTime | date:'EEEE d MMMM yyyy, HH:mm' : '' : 'es' }}</p>
+
+    <!-- CABECERA PARTIDO -->
+    <div class="match-hero">
+      <div class="teams-row">
+        <div class="team-block">
+          <div class="team-name">{{ match.homeTeam }}</div>
+        </div>
+        <div class="vs">vs</div>
+        <div class="team-block">
+          <div class="team-name">{{ match.awayTeam }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CERRADO -->
+    <div class="closed-banner" *ngIf="isClosed">
+      El plazo de envío ha cerrado — faltan menos de 24h para el partido
+    </div>
+
+    <!-- FORM -->
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" *ngIf="!isClosed">
+
+      <!-- RESULTADO -->
+      <div class="section">
+        <div class="section-label">Resultado</div>
+        <div class="score-grid">
+          <div class="score-wrap">
+            <div class="score-team-label">{{ match.homeTeam }}</div>
+            <input type="number" formControlName="homeGoals" min="0" class="score-input" placeholder="0">
+          </div>
+          <div class="score-dash">—</div>
+          <div class="score-wrap">
+            <div class="score-team-label">{{ match.awayTeam }}</div>
+            <input type="number" formControlName="awayGoals" min="0" class="score-input" placeholder="0">
+          </div>
+        </div>
+      </div>
+
+      <!-- EMPATE O GANADOR -->
+      <div class="section">
+        <div class="section-label">¿Quién gana la final?</div>
+
+        <div class="winner-display" *ngIf="!isDraw && winner">
+          {{ winner }}
+        </div>
+
+        <ng-container *ngIf="isDraw">
+          <div class="draw-notice">Empate — ¿quién gana en prórroga o penaltis?</div>
+          <div class="toggle-row">
+            <button type="button" class="toggle-btn"
+              [class.active]="form.value.winningTeam === match.homeTeam"
+              (click)="selectDrawWinner(match.homeTeam)">
+              {{ match.homeTeam }}
+            </button>
+            <button type="button" class="toggle-btn"
+              [class.active]="form.value.winningTeam === match.awayTeam"
+              (click)="selectDrawWinner(match.awayTeam)">
+              {{ match.awayTeam }}
+            </button>
+          </div>
+        </ng-container>
+      </div>
+
+      <!-- ERROR ENVÍO -->
+      <div class="error-banner" *ngIf="error">
+        <span>{{ error }}</span>
+      </div>
+
+      <div class="deadline-info" *ngIf="timeUntilDeadline">
+        Tiempo restante para votar: <strong>{{ timeUntilDeadline }}</strong>
+      </div>
+
+      <button type="submit" class="submit-btn" [disabled]="form.invalid">
+        Enviar mi pronóstico
+      </button>
+
+    </form>
+  </ng-container>
+
+  <!-- ÉXITO -->
+  <div class="success-state" *ngIf="submitted">
+    <div class="success-icon">🏆</div>
+    <h2 class="success-title">¡Pronóstico enviado!</h2>
+    <p class="success-subtitle">Ya estás en la porra de la final. ¡Suerte!</p>
+    <div class="success-recap">
+      {{ match?.homeTeam }} {{ form.value.homeGoals }} - {{ form.value.awayGoals }} {{ match?.awayTeam }}
+    </div>
+    <button class="submit-btn" (click)="resetForm()">Nuevo pronóstico</button>
+  </div>
+
+</div>

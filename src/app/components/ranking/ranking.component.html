@@ -1,0 +1,70 @@
+<div class="ranking-wrap">
+
+  <div class="ranking-header">
+    <h2 class="ranking-title">Clasificación</h2>
+    <p class="ranking-subtitle">Puntuación acumulada de todos los participantes</p>
+  </div>
+
+  <div class="loading-state" *ngIf="loading">
+    <div class="spinner"></div>
+    <p>Cargando ranking...</p>
+  </div>
+
+  <div class="error-banner" *ngIf="!loading && error">{{ error }}</div>
+
+  <ng-container *ngIf="!loading && !error">
+
+    <div class="legend-row">
+      <div class="legend-item exact">
+        <span class="legend-dot"></span> Resultado exacto
+      </div>
+      <div class="legend-item diff">
+        <span class="legend-dot"></span> Diferencia de goles
+      </div>
+      <div class="legend-item winner">
+        <span class="legend-dot"></span> Solo ganador
+      </div>
+      <div class="legend-item none">
+        <span class="legend-dot"></span> Sin aciertos
+      </div>
+    </div>
+
+    <div class="table-wrapper">
+      <table class="ranking-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Participante</th>
+            <th>Puntos</th>
+            <th title="Resultado exacto">Exactos</th>
+            <th title="Diferencia de goles">Dif.</th>
+            <th title="Solo ganador">Gan.</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let entry of entries" [ngClass]="getRowClass(entry)">
+            <td class="col-pos">
+              <span class="position"
+                [class.gold]="entry.rankPosition === 1"
+                [class.silver]="entry.rankPosition === 2"
+                [class.bronze]="entry.rankPosition === 3">
+                {{ entry.rankPosition }}
+              </span>
+            </td>
+            <td class="col-name">{{ entry.fullName }}</td>
+            <td class="col-points">{{ entry.totalPoints }}</td>
+            <td class="col-stat">{{ entry.exactMatchesCount }}</td>
+            <td class="col-stat">{{ entry.goalDiffMatchesCount }}</td>
+            <td class="col-stat">{{ entry.winnerMatchesCount }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="empty-state" *ngIf="entries.length === 0">
+        Aún no hay participantes en el ranking.
+      </div>
+    </div>
+
+  </ng-container>
+
+</div>

@@ -1,0 +1,37 @@
+<div class="section-title">En curso</div>
+
+<div class="loading-state" *ngIf="loading"><div class="spinner"></div></div>
+<div class="error-text" *ngIf="!loading && error">{{ error }}</div>
+
+<div class="empty-state" *ngIf="!loading && !error && matches.length === 0">
+  No hay partidos en curso ahora mismo
+</div>
+
+<div class="match-card" *ngFor="let match of matches">
+  <div class="status-row">
+    <span class="status-badge" [ngClass]="statusClass(match)">
+      <span class="status-dot" *ngIf="statusClass(match) === 'live'"></span>
+      {{ statusLabel(match) }}
+    </span>
+    <span class="phase-tag">{{ match.phase | titlecase }}</span>
+  </div>
+
+  <div class="teams-row">
+    <div class="team">{{ match.homeTeam }}</div>
+
+    <div class="score-center">
+      <ng-container *ngIf="scoreVisible(match)">
+        <span class="score">{{ match.homeGoals }}</span>
+        <span class="sep">—</span>
+        <span class="score">{{ match.awayGoals }}</span>
+      </ng-container>
+      <span class="vs" *ngIf="!scoreVisible(match)">vs</span>
+    </div>
+
+    <div class="team">{{ match.awayTeam }}</div>
+  </div>
+
+  <div class="winner-row" *ngIf="match.winningTeam">
+    Ganador: <strong>{{ match.winningTeam }}</strong>
+  </div>
+</div>

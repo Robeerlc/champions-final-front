@@ -1,0 +1,38 @@
+<div class="section-title">Próximos partidos</div>
+<p class="section-sub">Siguientes 5 días</p>
+
+<div class="loading-state" *ngIf="loading"><div class="spinner"></div></div>
+<div class="error-text" *ngIf="!loading && error">{{ error }}</div>
+
+<div class="empty-state" *ngIf="!loading && !error && matches.length === 0">
+  No hay partidos programados en los próximos 5 días
+</div>
+
+<div class="match-item"
+     *ngFor="let match of matches"
+     [style.border-color]="borderColor(match)"
+     [style.background-color]="bgColor(match)"
+     [class.closed]="isClosedForPredictions(match)">
+
+  <div class="match-meta">
+    <span class="phase-tag">{{ phaseLabel(match.phase) }}</span>
+    <div class="meta-right">
+      <span class="urgency-badge" *ngIf="urgency(match) > 0 && !isClosedForPredictions(match)">
+        {{ urgencyLabel(match) }}
+      </span>
+      <span class="closed-badge" *ngIf="isClosedForPredictions(match)">
+        Cerrado
+      </span>
+      <span class="match-time" [class.muted]="isClosedForPredictions(match)">
+        {{ match.startTime | date:'EEE d MMM, HH:mm' : '' : 'es' }}
+      </span>
+    </div>
+  </div>
+
+  <div class="teams-row">
+    <span class="team">{{ match.homeTeam }}</span>
+    <span class="vs">vs</span>
+    <span class="team team-right">{{ match.awayTeam }}</span>
+  </div>
+
+</div>

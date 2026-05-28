@@ -1,0 +1,98 @@
+<div class="auth-wrap">
+
+  <div class="ucl-badge">
+    <span class="dot"></span>
+    UEFA Champions League
+    <span class="dot"></span>
+    Gran Final
+  </div>
+
+  <h1 class="main-title">La <span class="gold">Porra</span><br>de la Final</h1>
+  <p class="subtitle">Accede para enviar tu pronóstico</p>
+
+  <div class="mode-toggle">
+    <button class="toggle-btn" [class.active]="mode === 'login'" (click)="setMode('login')">
+      Entrar
+    </button>
+    <button class="toggle-btn" [class.active]="mode === 'register'" (click)="setMode('register')">
+      Registrarse
+    </button>
+  </div>
+
+  <!-- LOGIN -->
+  <form *ngIf="mode === 'login'" [formGroup]="loginForm" (ngSubmit)="onLogin()">
+
+    <div class="field-group">
+      <div class="section-label">Usuario</div>
+      <div class="email-wrap">
+        <input type="text" formControlName="username" class="field-input username-input"
+               placeholder="usuario.apellidos" autocomplete="username" spellcheck="false">
+        <span class="email-domain">@metrica-global.com</span>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <div class="section-label">Contraseña</div>
+      <input type="password" formControlName="password" class="field-input" placeholder="••••••••">
+    </div>
+
+    <div class="error-banner" *ngIf="error">{{ error }}</div>
+
+    <button type="submit" class="submit-btn" [disabled]="loginForm.invalid || loading">
+      <span *ngIf="!loading">Entrar</span>
+      <span *ngIf="loading">Cargando...</span>
+    </button>
+
+    <p class="switch-link">
+      ¿No tienes cuenta?
+      <button type="button" class="link-btn" (click)="setMode('register')">Regístrate</button>
+    </p>
+
+  </form>
+
+  <!-- REGISTER -->
+  <form *ngIf="mode === 'register'" [formGroup]="registerForm" (ngSubmit)="onRegister()">
+
+    <div class="field-group">
+      <div class="section-label">Nombre completo</div>
+      <input type="text" formControlName="fullName" class="field-input" placeholder="Tu nombre">
+    </div>
+
+    <div class="field-group">
+      <div class="section-label">Usuario</div>
+      <div class="email-wrap">
+        <input type="text" formControlName="username" class="field-input username-input"
+               placeholder="usuario.apellidos" autocomplete="username" spellcheck="false">
+        <span class="email-domain">@metrica-global.com</span>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <div class="section-label">Contraseña</div>
+      <input type="password" formControlName="password" class="field-input" placeholder="••••••••">
+    </div>
+
+    <div class="field-group">
+      <div class="section-label">País</div>
+      <div class="select-wrap">
+        <select formControlName="country" class="field-input">
+          <option *ngFor="let c of countries" [value]="c">{{ c }}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="error-banner" *ngIf="error">{{ error }}</div>
+
+    <button type="submit" class="submit-btn" [disabled]="registerForm.invalid || loading">
+      <span *ngIf="!loading">Crear cuenta</span>
+      <span *ngIf="loading">Cargando...</span>
+    </button>
+
+    <p class="switch-link">
+      ¿Ya tienes cuenta?
+      <button type="button" class="link-btn" (click)="setMode('login')">Entra aquí</button>
+    </p>
+
+  </form>
+
+</div>
