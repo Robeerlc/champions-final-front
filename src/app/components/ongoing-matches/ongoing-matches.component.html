@@ -20,12 +20,9 @@
     <div class="team">{{ match.homeTeam }}</div>
 
     <div class="score-center">
-      <ng-container *ngIf="scoreVisible(match)">
-        <span class="score">{{ match.homeGoals ?? 0 }}</span>
-        <span class="sep">—</span>
-        <span class="score">{{ match.awayGoals ?? 0 }}</span>
-      </ng-container>
-      <span class="vs" *ngIf="!scoreVisible(match)">vs</span>
+      <span class="score">{{ match.homeGoals }}</span>
+      <span class="sep">—</span>
+      <span class="score">{{ match.awayGoals }}</span>
     </div>
 
     <div class="team">{{ match.awayTeam }}</div>
