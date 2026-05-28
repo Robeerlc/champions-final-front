@@ -1,8 +1,0 @@
-providers = ["node"]
-
-[variables]
-NIXPACKS_NODE_VERSION = "22"
-
-[phases.build]
-dependsOn = ["install"]
-cmds = ["npm run build -- --configuration=production"]
