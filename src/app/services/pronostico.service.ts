@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, isDevMode } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Pronostico } from '../models/match.model';
@@ -7,7 +7,7 @@ import { Pronostico } from '../models/match.model';
   providedIn: 'root'
 })
 export class PronosticoService {
-  private baseUrl = 'http://localhost:8080/api';
+  private baseUrl = isDevMode() ? 'http://localhost:8080/api' : '/api';
 
   constructor(private http: HttpClient) {}
 
