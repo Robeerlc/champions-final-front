@@ -7,7 +7,7 @@ import { Match, TournamentPhase } from '../models/match.model';
   providedIn: 'root'
 })
 export class MatchService {
-  private baseUrl = 'http://193.70.44.51:8080/api';
+  private baseUrl = 'https://porramundialmetrica-championsfinalback-w-59fd54-193-70-44-51.sslip.io/api';
 
   constructor(private http: HttpClient) {}
 
