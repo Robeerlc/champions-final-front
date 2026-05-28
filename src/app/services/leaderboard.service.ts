@@ -7,7 +7,7 @@ import { LeaderboardEntry } from '../models/match.model';
   providedIn: 'root'
 })
 export class LeaderboardService {
-  private baseUrl = 'http://193.70.44.51:8080/api';
+  private baseUrl = 'http://localhost:8080/api';
 
   constructor(private http: HttpClient) {}
 
