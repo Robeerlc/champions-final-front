@@ -8,7 +8,14 @@ export class LocalTimePipe implements PipeTransform {
   transform(value: string | Date, format: 'time' | 'date' | 'datetime' = 'time', locale: string = 'es'): string {
     if (!value) return '';
 
-    const date = new Date(value);
+    let dateString = typeof value === 'string' ? value : value.toISOString();
+
+    // Si la fecha no tiene Z (no está en UTC), agregarla para forzar interpretación como UTC
+    if (typeof value === 'string' && !dateString.includes('Z') && !dateString.includes('+') && !dateString.includes('-00:')) {
+      dateString = dateString + 'Z';
+    }
+
+    const date = new Date(dateString);
     if (isNaN(date.getTime())) return '';
 
     const options: Intl.DateTimeFormatOptions = {};
@@ -31,3 +38,4 @@ export class LocalTimePipe implements PipeTransform {
     return date.toLocaleString(locale, options);
   }
 }
+
