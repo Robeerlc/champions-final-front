@@ -1,8 +1,7 @@
 providers = ["node"]
 
-# Le decimos explícitamente a Nixpacks que use Node 20
 [variables]
-NIXPACKS_NODE_VERSION = "20"
+NIXPACKS_NODE_VERSION = "22"
 
 [phases.build]
 dependsOn = ["install"]
