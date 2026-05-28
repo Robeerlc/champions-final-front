@@ -31,7 +31,7 @@ export class ChatService {
     }
 
     this.client = new Client({
-      webSocketFactory: () => new SockJS(this.wsUrl),
+      webSocketFactory: () => new SockJS(`${this.wsUrl}?token=${token}`),
       connectHeaders: { Authorization: `Bearer ${token}` },
       onConnect: () => {
         this.connected.set(true);
