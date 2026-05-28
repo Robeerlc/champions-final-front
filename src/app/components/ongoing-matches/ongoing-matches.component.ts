@@ -1,6 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef, inject, DestroyRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
 import { timer, switchMap, catchError, of } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatchService } from '../../services/match.service';
@@ -20,7 +19,7 @@ const STATUS_LABELS: Record<string, string> = {
 @Component({
   selector: 'app-ongoing-matches',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule],
   templateUrl: './ongoing-matches.component.html',
   styleUrls: ['./ongoing-matches.component.scss']
 })
