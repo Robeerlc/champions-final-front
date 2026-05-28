@@ -15,8 +15,8 @@ export interface ChatMessage {
 export class ChatService {
   private http = inject(HttpClient);
   private authService = inject(AuthService);
-  private baseUrl = 'http://193.70.44.51:8080/api';
-  private wsUrl = 'http://193.70.44.51:8080/ws-chat';
+  private baseUrl = 'https://porramundialmetrica-championsfinalback-w-59fd54-193-70-44-51.sslip.io/api';
+  private wsUrl = 'https://porramundialmetrica-championsfinalback-w-59fd54-193-70-44-51.sslip.io/ws-chat';
 
   messages = signal<ChatMessage[]>([]);
   connected = signal(false);
