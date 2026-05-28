@@ -1,6 +1,7 @@
-[providers]
-node = {}
+# Declaramos los proveedores como una lista (sequence)
+providers = ["node"]
 
+# Fase de construcción: instalar y compilar Angular
 [phases.build]
 dependsOn = ["install"]
 cmds = ["npm run build -- --configuration=production"]
