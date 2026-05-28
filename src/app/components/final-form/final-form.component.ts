@@ -1,11 +1,11 @@
 import { Component, OnInit, ChangeDetectorRef, inject, DestroyRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { timer } from 'rxjs';
+import { timer, forkJoin } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatchService } from '../../services/match.service';
 import { PronosticoService } from '../../services/pronostico.service';
-import { Match, Pronostico, TournamentPhase } from '../../models/match.model';
+import { Match, Pronostico, TournamentPhase, UserPrediction } from '../../models/match.model';
 import { LocalTimePipe } from '../../pipes/local-time.pipe';
 
 @Component({
@@ -18,8 +18,8 @@ import { LocalTimePipe } from '../../pipes/local-time.pipe';
 export class FinalFormComponent implements OnInit {
   form!: FormGroup;
   match: Match | null = null;
+  existingPrediction: UserPrediction | null = null;
   loading = true;
-  submitted = false;
   error: string | null = null;
 
   private destroyRef = inject(DestroyRef);
@@ -33,10 +33,9 @@ export class FinalFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.buildForm();
-    this.loadMatch();
+    this.loadData();
     this.form.get('homeGoals')!.valueChanges.subscribe(() => this.syncWinningTeamValidator());
     this.form.get('awayGoals')!.valueChanges.subscribe(() => this.syncWinningTeamValidator());
-    // Refresh countdown every minute
     timer(60_000, 60_000).pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => this.cdr.markForCheck());
   }
@@ -74,10 +73,16 @@ export class FinalFormComponent implements OnInit {
     });
   }
 
-  loadMatch(): void {
-    this.matchService.getMatchByPhase(TournamentPhase.FINAL).subscribe({
-      next: (matches) => {
-        this.match = matches[0];
+  loadData(): void {
+    forkJoin({
+      matches: this.matchService.getMatchByPhase(TournamentPhase.FINAL),
+      predictions: this.pronosticoService.getMyPredictions()
+    }).subscribe({
+      next: ({ matches, predictions }) => {
+        this.match = matches[0] ?? null;
+        if (this.match) {
+          this.existingPrediction = predictions.find(p => p.matchId === this.match!.id) ?? null;
+        }
         this.loading = false;
         this.cdr.markForCheck();
       },
@@ -120,7 +125,6 @@ export class FinalFormComponent implements OnInit {
     this.error = null;
 
     const draw = this.isDraw;
-
     const pronostico: Pronostico = {
       idMatch: this.match.id,
       homeGoals: this.form.value.homeGoals,
@@ -130,8 +134,15 @@ export class FinalFormComponent implements OnInit {
     };
 
     this.pronosticoService.enviarPronostico(pronostico).subscribe({
-      next: () => {
-        this.submitted = true;
+      next: (saved: any) => {
+        this.existingPrediction = saved ?? {
+          id: 0, userId: 0, matchId: this.match!.id,
+          homeGoals: pronostico.homeGoals,
+          awayGoals: pronostico.awayGoals,
+          pointsEarned: 0,
+          isDraw: draw,
+          winningTeam: pronostico.winningTeam
+        };
         this.cdr.markForCheck();
       },
       error: (err) => {
@@ -139,11 +150,5 @@ export class FinalFormComponent implements OnInit {
         this.cdr.markForCheck();
       }
     });
-  }
-
-  resetForm(): void {
-    this.submitted = false;
-    this.error = null;
-    this.form.reset();
   }
 }

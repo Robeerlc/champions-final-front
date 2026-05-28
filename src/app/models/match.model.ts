@@ -26,6 +26,17 @@ export interface Pronostico {
   winningTeam: string;
 }
 
+export interface UserPrediction {
+  id: number;
+  userId: number;
+  matchId: number;
+  homeGoals: number;
+  awayGoals: number;
+  pointsEarned: number;
+  isDraw: boolean;
+  winningTeam: string;
+}
+
 export enum TournamentPhase {
   GROUP_STAGE = 'GROUP_STAGE',
   ROUND_OF_16 = 'ROUND_OF_16',
