@@ -6,11 +6,12 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatchService } from '../../services/match.service';
 import { PronosticoService } from '../../services/pronostico.service';
 import { Match, Pronostico, TournamentPhase } from '../../models/match.model';
+import { LocalTimePipe } from '../../pipes/local-time.pipe';
 
 @Component({
   selector: 'app-final-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, LocalTimePipe],
   templateUrl: './final-form.component.html',
   styleUrls: ['./final-form.component.scss']
 })

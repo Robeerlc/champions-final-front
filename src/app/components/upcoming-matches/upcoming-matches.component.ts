@@ -4,6 +4,7 @@ import { timer, switchMap, catchError, of } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatchService } from '../../services/match.service';
 import { Match } from '../../models/match.model';
+import { LocalTimePipe } from '../../pipes/local-time.pipe';
 
 const LIVE_STATUSES = ['IN_PLAY', 'LIVE', 'EXTRA_TIME', 'PENALTY', 'PAUSED', 'HALFTIME'];
 const DONE_STATUSES = ['FINISHED', 'FULL_TIME', 'SUSPENDED', 'POSTPONED'];
@@ -19,7 +20,7 @@ const PHASE_LABELS: Record<string, string> = {
 @Component({
   selector: 'app-upcoming-matches',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, LocalTimePipe],
   templateUrl: './upcoming-matches.component.html',
   styleUrls: ['./upcoming-matches.component.scss']
 })

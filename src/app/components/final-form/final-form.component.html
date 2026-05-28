@@ -22,7 +22,7 @@
     </div>
 
     <h1 class="main-title">Tu pronóstico para la <span class="gold">Final</span></h1>
-    <p class="subtitle">{{ match.startTime | date:'EEEE d MMMM yyyy, HH:mm' : undefined : 'es' }}</p>
+    <p class="subtitle">{{ match.startTime | localTime:'datetime':'es' }}</p>
 
     <!-- CABECERA PARTIDO -->
     <div class="match-hero">
