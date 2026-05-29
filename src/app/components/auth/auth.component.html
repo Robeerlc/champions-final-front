@@ -65,10 +65,18 @@
   <form *ngIf="mode === 'register'" [formGroup]="registerForm" (ngSubmit)="onRegister()">
 
     <div class="field-group">
-      <div class="section-label">Nombre completo</div>
-      <input type="text" formControlName="fullName" class="field-input" placeholder="Tu nombre">
-      <div class="field-error" *ngIf="registerForm.get('fullName')?.touched && registerForm.get('fullName')?.hasError('pattern')">
-        El nombre completo es inválido
+      <div class="section-label">Nombre</div>
+      <input type="text" formControlName="firstName" class="field-input" placeholder="Tu nombre">
+      <div class="field-error" *ngIf="registerForm.get('firstName')?.touched && registerForm.get('firstName')?.hasError('pattern')">
+        El nombre es inválido
+      </div>
+    </div>
+
+    <div class="field-group">
+      <div class="section-label">Apellidos</div>
+      <input type="text" formControlName="lastName" class="field-input" placeholder="Tus apellidos">
+      <div class="field-error" *ngIf="registerForm.get('lastName')?.touched && registerForm.get('lastName')?.hasError('pattern')">
+        Los apellidos son inválidos
       </div>
     </div>
 

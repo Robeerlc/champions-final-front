@@ -35,9 +35,10 @@ export class AuthComponent {
 
     const allowed = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžæÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'\-]+$/;
     this.registerForm = this.fb.group({
-      fullName: ['', [Validators.required, Validators.pattern(allowed)]],
+      firstName: ['', [Validators.required, Validators.pattern(allowed)]],
+      lastName: ['', [Validators.required, Validators.pattern(allowed)]],
       username: ['', [Validators.required, Validators.pattern(allowed)]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', [Validators.required, Validators.minLength(6), Validators.pattern(allowed)]],
       country: ['SPAIN', Validators.required]
     });
     this.registerForm.get('country')!.disable();
@@ -74,7 +75,8 @@ export class AuthComponent {
     this.loading = true;
     this.error = null;
 
-    const { username, password, fullName, country } = this.registerForm.getRawValue();
+    const { username, password, firstName, lastName, country } = this.registerForm.getRawValue();
+    const fullName = `${firstName.trim()} ${lastName.trim()}`;
     const email = `${username}@metrica-global.com`;
     this.authService.register({ email, password, fullName, country }).subscribe({
       next: () => {
