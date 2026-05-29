@@ -124,6 +124,10 @@
           <span>{{ error }}</span>
         </div>
 
+        <div class="success-banner" *ngIf="success">
+          <span>{{ success }}</span>
+        </div>
+
         <div class="deadline-info" *ngIf="timeUntilDeadline">
           Tiempo restante para votar: <strong>{{ timeUntilDeadline }}</strong>
         </div>

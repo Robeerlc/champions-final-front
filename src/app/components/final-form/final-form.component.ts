@@ -22,6 +22,7 @@ export class FinalFormComponent implements OnInit {
   editMode = false;
   loading = true;
   error: string | null = null;
+  success: string | null = null;
 
   private destroyRef = inject(DestroyRef);
 
@@ -110,7 +111,7 @@ export class FinalFormComponent implements OnInit {
         this.match = matches[0] ?? null;
         if (this.match) {
           const byMatchId = predictions.find(p => String(p.matchId) === String(this.match!.id));
-          this.existingPrediction = byMatchId ?? predictions[0] ?? null;
+          this.existingPrediction = byMatchId ?? null;
         }
         this.loading = false;
         this.cdr.markForCheck();
@@ -183,8 +184,10 @@ export class FinalFormComponent implements OnInit {
   onSubmit(): void {
     if (this.form.invalid || !this.match) return;
     this.error = null;
+    this.success = null;
 
     const draw = this.isDraw;
+    const wasEditMode = this.editMode;
     const pronostico: Pronostico = {
       idMatch: this.match.id,
       homeGoals: this.form.value.homeGoals,
@@ -204,6 +207,12 @@ export class FinalFormComponent implements OnInit {
         };
         this.editMode = false;
         this.form.reset();
+        this.success = wasEditMode ? 'Pronóstico actualizado.' : 'Pronóstico guardado exitosamente.';
+        // Limpiar el mensaje de éxito después de 5 segundos
+        timer(5000).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+          this.success = null;
+          this.cdr.markForCheck();
+        });
         this.cdr.markForCheck();
       },
       error: (err) => {

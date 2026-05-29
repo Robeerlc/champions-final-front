@@ -297,6 +297,16 @@ $error-text: #f85149;
   margin-bottom: 1rem;
 }
 
+.success-banner {
+  background: #001a00;
+  color: #3fb950;
+  border: 1px solid #238636;
+  border-radius: 6px;
+  padding: 0.6rem 0.9rem;
+  font-size: 13px;
+  margin-bottom: 1rem;
+}
+
 .submit-btn {
   width: 100%;
   padding: 0.75rem;
