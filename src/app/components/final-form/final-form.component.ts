@@ -54,14 +54,14 @@ export class FinalFormComponent implements OnInit {
 
   private syncWinningTeamValidator(): void {
     const ctrl = this.form.get('winningTeam')!;
+    ctrl.clearValidators();
     if (this.isDraw) {
-      ctrl.setValidators(Validators.required);
+      ctrl.setValidators([Validators.required]);
       ctrl.setValue('', { emitEvent: false });
     } else {
-      ctrl.clearValidators();
       ctrl.setValue(this.winner, { emitEvent: false });
     }
-    ctrl.updateValueAndValidity({ emitEvent: false });
+    ctrl.updateValueAndValidity();
     this.cdr.markForCheck();
   }
 
