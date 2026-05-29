@@ -77,6 +77,60 @@ $error-text: #f85149;
   line-height: 1.6;
 }
 
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: $bg-card;
+  border: 1px solid $border-subtle;
+  border-radius: 10px;
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.filter-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $text-muted;
+  white-space: nowrap;
+}
+
+.filter-btns {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 0.3rem 0.75rem;
+  border: 1px solid $border;
+  border-radius: 6px;
+  background: transparent;
+  color: $text-secondary;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+
+  &:hover { border-color: $accent; color: $accent; }
+
+  &.active {
+    background: $accent;
+    border-color: $accent;
+    color: #000;
+    font-weight: 600;
+  }
+}
+
 .match-group {
   margin-bottom: 1.75rem;
 }

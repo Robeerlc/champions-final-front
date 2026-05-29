@@ -18,50 +18,83 @@
       No hay predicciones públicas por el momento, espera a que se bloqueen las predicciones
     </div>
 
-    <div class="match-group" *ngFor="let group of groups">
+    <ng-container *ngIf="groups.length > 0">
 
-      <div class="match-header">
-        <div class="match-header-left">
-          <span class="phase-tag">{{ phaseLabel(group.match.phase) }}</span>
-          <span class="match-date">{{ group.match.startTime | localTime:'datetime':'es' }}</span>
+      <!-- FILTROS -->
+      <div class="filter-bar">
+        <div class="filter-group">
+          <span class="filter-label">Ganador</span>
+          <div class="filter-btns">
+            <button class="filter-btn" [class.active]="filterWinner === 'all'" (click)="filterWinner = 'all'">Todos</button>
+            <button class="filter-btn" *ngFor="let team of teamOptions"
+              [class.active]="filterWinner === team" (click)="filterWinner = team">
+              {{ team }}
+            </button>
+          </div>
         </div>
-        <div class="match-teams">
-          <span class="team-name">{{ group.match.homeTeam }}</span>
-          <span class="vs">vs</span>
-          <span class="team-name">{{ group.match.awayTeam }}</span>
+
+        <div class="filter-group">
+          <span class="filter-label">Empate</span>
+          <div class="filter-btns">
+            <button class="filter-btn" [class.active]="filterDraw === 'all'"    (click)="filterDraw = 'all'">Todos</button>
+            <button class="filter-btn" [class.active]="filterDraw === 'draw'"   (click)="filterDraw = 'draw'">Empate</button>
+            <button class="filter-btn" [class.active]="filterDraw === 'nodraw'" (click)="filterDraw = 'nodraw'">Sin empate</button>
+          </div>
         </div>
-        <span class="pred-count">{{ group.predictions.length }} predicciones</span>
       </div>
 
-      <div class="table-wrapper">
-        <table class="pred-table">
-          <thead>
-            <tr>
-              <th>Participante</th>
-              <th>Resultado</th>
-              <th>Ganador</th>
-              <th>Puntos</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let pred of group.predictions">
-              <td class="col-user">{{ pred.username }}</td>
-              <td class="col-score">{{ pred.homeGoals }} – {{ pred.awayGoals }}</td>
-              <td class="col-winner">
-                {{ pred.winningTeam }}
-                <span class="draw-tag" *ngIf="pred.isDraw">(empate)</span>
-              </td>
-              <td class="col-points">
-                <span class="points-badge" [class.zero]="pred.pointsEarned === 0">
-                  {{ pred.pointsEarned }}
-                </span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <!-- SIN RESULTADOS CON FILTROS -->
+      <div class="empty-state" *ngIf="!hasAnyResults">
+        No hay predicciones que coincidan con los filtros seleccionados
       </div>
 
-    </div>
+      <!-- GRUPOS -->
+      <div class="match-group" *ngFor="let group of groups" [hidden]="filteredPredictions(group).length === 0">
+
+        <div class="match-header">
+          <div class="match-header-left">
+            <span class="phase-tag">{{ phaseLabel(group.match.phase) }}</span>
+            <span class="match-date">{{ group.match.startTime | localTime:'datetime':'es' }}</span>
+          </div>
+          <div class="match-teams">
+            <span class="team-name">{{ group.match.homeTeam }}</span>
+            <span class="vs">vs</span>
+            <span class="team-name">{{ group.match.awayTeam }}</span>
+          </div>
+          <span class="pred-count">{{ filteredPredictions(group).length }} predicciones</span>
+        </div>
+
+        <div class="table-wrapper">
+          <table class="pred-table">
+            <thead>
+              <tr>
+                <th>Participante</th>
+                <th>Resultado</th>
+                <th>Ganador</th>
+                <th>Puntos</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let pred of filteredPredictions(group)">
+                <td class="col-user">{{ pred.username }}</td>
+                <td class="col-score">{{ pred.homeGoals }} – {{ pred.awayGoals }}</td>
+                <td class="col-winner">
+                  {{ pred.winningTeam }}
+                  <span class="draw-tag" *ngIf="pred.isDraw">(empate)</span>
+                </td>
+                <td class="col-points">
+                  <span class="points-badge" [class.zero]="pred.pointsEarned === 0">
+                    {{ pred.pointsEarned }}
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+    </ng-container>
 
   </ng-container>
 

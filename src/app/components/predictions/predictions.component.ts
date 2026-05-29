@@ -23,6 +23,9 @@ export class PredictionsComponent implements OnInit {
   loading = true;
   error: string | null = null;
 
+  filterWinner = 'all';
+  filterDraw = 'all'; // 'all' | 'draw' | 'nodraw'
+
   constructor(
     private matchService: MatchService,
     private pronosticoService: PronosticoService,
@@ -57,6 +60,28 @@ export class PredictionsComponent implements OnInit {
         this.cdr.markForCheck();
       }
     });
+  }
+
+  get teamOptions(): string[] {
+    const teams = new Set<string>();
+    this.groups.forEach(g => {
+      teams.add(g.match.homeTeam);
+      teams.add(g.match.awayTeam);
+    });
+    return Array.from(teams);
+  }
+
+  filteredPredictions(group: PredictionGroup): PublicPrediction[] {
+    return group.predictions.filter(p => {
+      if (this.filterWinner !== 'all' && p.winningTeam !== this.filterWinner) return false;
+      if (this.filterDraw === 'draw' && !p.isDraw) return false;
+      if (this.filterDraw === 'nodraw' && p.isDraw) return false;
+      return true;
+    });
+  }
+
+  get hasAnyResults(): boolean {
+    return this.groups.some(g => this.filteredPredictions(g).length > 0);
   }
 
   phaseLabel(phase: string): string {
