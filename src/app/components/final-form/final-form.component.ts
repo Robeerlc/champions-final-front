@@ -54,21 +54,31 @@ export class FinalFormComponent implements OnInit {
 
   private syncWinningTeamValidator(): void {
     const ctrl = this.form.get('winningTeam')!;
-    ctrl.clearValidators();
+    
     if (this.isDraw) {
+      // Si es empate, requerimos seleccionar ganador
       ctrl.setValidators([Validators.required]);
       ctrl.setValue('', { emitEvent: false });
     } else {
+      // Si no es empate, sin validadores (auto-settea a ganador)
+      ctrl.clearValidators();
       ctrl.setValue(this.winner, { emitEvent: false });
     }
-    ctrl.updateValueAndValidity();
+    
+    ctrl.updateValueAndValidity({ emitEvent: false });
     this.form.updateValueAndValidity();
     this.cdr.markForCheck();
   }
 
   buildForm(): void {
-    const integer = (c: import('@angular/forms').AbstractControl) =>
-      c.value !== null && !Number.isInteger(Number(c.value)) ? { integer: true } : null;
+    const integer = (c: import('@angular/forms').AbstractControl) => {
+      const val = c.value;
+      if (val === null || val === undefined || val === '') {
+        return null;
+      }
+      const num = Number(val);
+      return !Number.isInteger(num) ? { integer: true } : null;
+    };
 
     this.form = this.fb.group({
       homeGoals: [null, [Validators.required, Validators.min(0), Validators.max(30), integer]],
