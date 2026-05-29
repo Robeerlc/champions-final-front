@@ -83,7 +83,14 @@ export class AuthComponent {
         this.cdr.markForCheck();
       },
       error: (err) => {
-        this.error = err?.error?.message || 'Error al registrarse.';
+        const springErrors = err?.error?.errors;
+        if (Array.isArray(springErrors) && springErrors.length > 0) {
+          this.error = springErrors.map((e: any) => e.defaultMessage).join(' · ');
+        } else {
+          this.error = err?.error?.message?.includes('Validation failed')
+            ? 'Revisa los campos introducidos.'
+            : (err?.error?.message || 'Error al registrarse.');
+        }
         this.loading = false;
         this.cdr.markForCheck();
       }
