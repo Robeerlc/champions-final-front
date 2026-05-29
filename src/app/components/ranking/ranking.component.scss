@@ -108,22 +108,26 @@ $error-text: #f85149;
   background: $bg-card;
   border: 1px solid $border-subtle;
   border-radius: 10px;
-  overflow: hidden;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.03);
   max-height: 228px;
+  overflow-x: auto;
   overflow-y: auto;
 
-  &::-webkit-scrollbar       { width: 6px; }
-  &::-webkit-scrollbar-track { background: $bg-card; }
-  &::-webkit-scrollbar-thumb {
+  &::-webkit-scrollbar        { width: 6px; height: 6px; }
+  &::-webkit-scrollbar-track  { background: $bg-card; border-radius: 10px; }
+  &::-webkit-scrollbar-thumb  {
     background: $border;
     border-radius: 10px;
     &:hover { background: $accent; }
   }
+  &::-webkit-scrollbar-corner { background: $bg-card; }
+  scrollbar-width: thin;
+  scrollbar-color: $border $bg-card;
 }
 
 .ranking-table {
   width: 100%;
+  min-width: 480px;
   border-collapse: collapse;
   table-layout: fixed;
 

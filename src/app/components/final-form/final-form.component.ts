@@ -66,9 +66,12 @@ export class FinalFormComponent implements OnInit {
   }
 
   buildForm(): void {
+    const integer = (c: import('@angular/forms').AbstractControl) =>
+      c.value !== null && !Number.isInteger(Number(c.value)) ? { integer: true } : null;
+
     this.form = this.fb.group({
-      homeGoals: [null, [Validators.required, Validators.min(0)]],
-      awayGoals: [null, [Validators.required, Validators.min(0)]],
+      homeGoals: [null, [Validators.required, Validators.min(0), integer]],
+      awayGoals: [null, [Validators.required, Validators.min(0), integer]],
       winningTeam: ['', Validators.required]
     });
   }

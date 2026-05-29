@@ -69,12 +69,12 @@
           <div class="score-grid">
             <div class="score-wrap">
               <div class="score-team-label">{{ match.homeTeam }}</div>
-              <input type="number" formControlName="homeGoals" min="0" class="score-input" placeholder="0">
+              <input type="number" formControlName="homeGoals" min="0" step="1" class="score-input" placeholder="0">
             </div>
             <div class="score-dash">—</div>
             <div class="score-wrap">
               <div class="score-team-label">{{ match.awayTeam }}</div>
-              <input type="number" formControlName="awayGoals" min="0" class="score-input" placeholder="0">
+              <input type="number" formControlName="awayGoals" min="0" step="1" class="score-input" placeholder="0">
             </div>
           </div>
         </div>
