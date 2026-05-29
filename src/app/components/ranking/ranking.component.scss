@@ -126,10 +126,10 @@ $error-text: #f85149;
 }
 
 .ranking-table {
-  width: 100%;
-  min-width: 600px;
+  width: max-content;
+  min-width: 100%;
   border-collapse: collapse;
-  table-layout: fixed;
+  table-layout: auto;
 
   thead {
     background: $bg-card;
@@ -147,7 +147,6 @@ $error-text: #f85149;
       color: rgba(255, 255, 255, 0.5);
       text-align: left;
       white-space: nowrap;
-      overflow: hidden;
     }
   }
 
@@ -172,15 +171,13 @@ $error-text: #f85149;
     td {
       padding: 14px 16px;
       text-align: left;
-      overflow: hidden;
-      text-overflow: ellipsis;
       white-space: nowrap;
     }
   }
 }
 
 .col-pos    { width: 52px; }
-.col-name   { width: 200px; min-width: 200px; }
+.col-name   { }
 .col-points { width: 80px; }
 .col-stat   {
   width: 56px;
