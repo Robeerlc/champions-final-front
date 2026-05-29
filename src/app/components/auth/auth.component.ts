@@ -17,6 +17,7 @@ export class AuthComponent {
   registerForm: FormGroup;
   error: string | null = null;
   loading = false;
+  showLoginPassword = false;
   showRegisterPassword = false;
   showSuccessModal = false;
   registeredEmail = '';
