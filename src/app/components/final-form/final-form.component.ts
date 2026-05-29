@@ -108,7 +108,7 @@ export class FinalFormComponent implements OnInit {
       next: ({ matches, predictions }) => {
         this.match = matches[0] ?? null;
         if (this.match) {
-          this.existingPrediction = predictions.find(p => p.matchId === this.match!.id) ?? null;
+          this.existingPrediction = predictions.find(p => Number(p.matchId) === Number(this.match!.id)) ?? null;
         }
         this.loading = false;
         this.cdr.markForCheck();
