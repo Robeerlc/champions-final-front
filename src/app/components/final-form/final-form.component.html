@@ -101,6 +101,24 @@
           </ng-container>
         </div>
 
+        <div class="prediction-rules">
+          <div class="rule"
+            [class.met]="hasValues && homeVal! >= 0 && awayVal! >= 0"
+            [class.unmet]="hasValues && (homeVal! < 0 || awayVal! < 0)">
+            Mínimo 0 goles por equipo
+          </div>
+          <div class="rule"
+            [class.met]="hasValues && homeVal! <= 30 && awayVal! <= 30"
+            [class.unmet]="hasValues && (homeVal! > 30 || awayVal! > 30)">
+            Máximo 30 goles por equipo
+          </div>
+          <div class="rule"
+            [class.met]="hasValues && (!isDraw || drawWinner !== '')"
+            [class.unmet]="hasValues && isDraw && drawWinner === ''">
+            Selecciona el ganador si hay empate
+          </div>
+        </div>
+
         <div class="error-banner" *ngIf="error">
           <span>{{ error }}</span>
         </div>

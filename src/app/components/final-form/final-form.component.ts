@@ -121,6 +121,11 @@ export class FinalFormComponent implements OnInit {
     });
   }
 
+  get homeVal(): number | null { return this.form.get('homeGoals')?.value ?? null; }
+  get awayVal(): number | null { return this.form.get('awayGoals')?.value ?? null; }
+  get drawWinner(): string { return this.form.get('winningTeam')?.value ?? ''; }
+  get hasValues(): boolean { return this.homeVal !== null && this.awayVal !== null; }
+
   get timeUntilDeadline(): string {
     if (!this.match) return '';
     const msLeft = new Date(this.match.startTime).getTime() - Date.now() - 24 * 60 * 60 * 1000;
