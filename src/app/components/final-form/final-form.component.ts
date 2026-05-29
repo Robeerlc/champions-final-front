@@ -41,10 +41,15 @@ export class FinalFormComponent implements OnInit {
   }
 
   get winner(): string {
-    const h = Number(this.form.value.homeGoals);
-    const a = Number(this.form.value.awayGoals);
-    if (this.isDraw || !this.match) return '';
-    return h > a ? this.match.homeTeam : this.match.awayTeam;
+    const h = this.form.get('homeGoals')?.value;
+    const a = this.form.get('awayGoals')?.value;
+    
+    // Si es empate, no hay partido cargado, o los inputs están incompletos, no hay ganador automático
+    if (this.isDraw || !this.match || h === null || h === '' || a === null || a === '') {
+      return '';
+    }
+    
+    return Number(h) > Number(a) ? this.match.homeTeam : this.match.awayTeam;
   }
 
   selectDrawWinner(team: string): void {
@@ -56,17 +61,25 @@ export class FinalFormComponent implements OnInit {
     const ctrl = this.form.get('winningTeam')!;
     
     if (this.isDraw) {
-      // Si es empate, requerimos seleccionar ganador
+      // Si es empate, requerimos seleccionar ganador manualmente
       ctrl.setValidators([Validators.required]);
-      ctrl.setValue('', { emitEvent: false });
+      
+      // Solo reseteamos si no está ya vacío para evitar saltos innecesarios
+      if (ctrl.value !== '') {
+        ctrl.setValue('', { emitEvent: false });
+      }
     } else {
-      // Si no es empate, sin validadores (auto-settea a ganador)
+      // Si no es empate, auto-asignamos al ganador y quitamos validadores
       ctrl.clearValidators();
-      ctrl.setValue(this.winner, { emitEvent: false });
+      const currentWinner = this.winner;
+      
+      if (ctrl.value !== currentWinner) {
+        ctrl.setValue(currentWinner, { emitEvent: false });
+      }
     }
     
     ctrl.updateValueAndValidity({ emitEvent: false });
-    this.form.updateValueAndValidity();
+    this.form.updateValueAndValidity({ emitEvent: false });
     this.cdr.markForCheck();
   }
 
@@ -129,9 +142,15 @@ export class FinalFormComponent implements OnInit {
   }
 
   get isDraw(): boolean {
-    const h = this.form.value.homeGoals;
-    const a = this.form.value.awayGoals;
-    return h !== null && a !== null && Number(h) === Number(a);
+    const h = this.form.get('homeGoals')?.value;
+    const a = this.form.get('awayGoals')?.value;
+    
+    // Si alguno de los campos es nulo o está vacío, no evaluamos el empate
+    if (h === null || h === '' || a === null || a === '') {
+      return false;
+    }
+    
+    return Number(h) === Number(a);
   }
 
   onSubmit(): void {
