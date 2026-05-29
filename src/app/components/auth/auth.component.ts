@@ -40,6 +40,7 @@ export class AuthComponent {
       password: ['', v],
       country: ['SPAIN', Validators.required]
     });
+    this.registerForm.get('country')!.disable();
   }
 
   setMode(mode: 'login' | 'register'): void {
@@ -73,7 +74,7 @@ export class AuthComponent {
     this.loading = true;
     this.error = null;
 
-    const { username, password, fullName, country } = this.registerForm.value;
+    const { username, password, fullName, country } = this.registerForm.getRawValue();
     const email = `${username}@metrica-global.com`;
     this.authService.register({ email, password, fullName, country }).subscribe({
       next: () => {
