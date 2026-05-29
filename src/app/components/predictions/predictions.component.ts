@@ -35,11 +35,10 @@ export class PredictionsComponent implements OnInit {
       predictions: this.pronosticoService.getAllPredictions()
     }).subscribe({
       next: ({ matches, predictions }) => {
-        const locked = predictions.filter(p => p.isLocked);
         const matchMap = new Map(matches.map(m => [m.id, m]));
 
         const groupMap = new Map<number, PublicPrediction[]>();
-        for (const p of locked) {
+        for (const p of predictions) {
           if (!groupMap.has(p.matchId)) groupMap.set(p.matchId, []);
           groupMap.get(p.matchId)!.push(p);
         }
