@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef, inject, DestroyRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { timer, forkJoin } from 'rxjs';
+import { timer, forkJoin, catchError, of } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatchService } from '../../services/match.service';
 import { PronosticoService } from '../../services/pronostico.service';
@@ -105,7 +105,12 @@ export class FinalFormComponent implements OnInit {
   loadData(): void {
     forkJoin({
       matches: this.matchService.getMatchByPhase(TournamentPhase.FINAL),
-      predictions: this.pronosticoService.getMyPredictions()
+      predictions: this.pronosticoService.getMyPredictions().pipe(
+        catchError((err) => {
+          console.error('Error cargando predicciones:', err);
+          return of([]);
+        })
+      )
     }).subscribe({
       next: ({ matches, predictions }) => {
         this.match = matches[0] ?? null;
@@ -116,7 +121,8 @@ export class FinalFormComponent implements OnInit {
         this.loading = false;
         this.cdr.markForCheck();
       },
-      error: () => {
+      error: (err) => {
+        console.error('Error cargando datos:', err);
         this.error = 'No se pudo cargar el partido de la final.';
         this.loading = false;
         this.cdr.markForCheck();
@@ -208,7 +214,6 @@ export class FinalFormComponent implements OnInit {
         this.editMode = false;
         this.form.reset();
         this.success = wasEditMode ? 'Pronóstico actualizado.' : 'Pronóstico guardado exitosamente.';
-        // Limpiar el mensaje de éxito después de 5 segundos
         timer(5000).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
           this.success = null;
           this.cdr.markForCheck();
