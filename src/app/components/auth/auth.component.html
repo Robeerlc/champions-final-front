@@ -113,6 +113,11 @@
         <div class="rule" [class.met]="pwVal.length > 0 && pwVal.length <= 100" [class.unmet]="pwVal.length > 100">
           Máximo 100 caracteres
         </div>
+        <div class="rule"
+          [class.met]="pwVal.length > 0 && !registerForm.get('password')?.hasError('pattern')"
+          [class.unmet]="pwVal.length > 0 && !!registerForm.get('password')?.hasError('pattern')">
+          Solo letras, números y símbolos (@, !, #, $...)
+        </div>
       </div>
     </div>
 
