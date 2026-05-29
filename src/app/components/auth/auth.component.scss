@@ -236,6 +236,12 @@ $error-text: #f85149;
   }
 }
 
+.field-error {
+  font-size: 12px;
+  color: $error-text;
+  margin-top: 0.35rem;
+}
+
 .error-banner {
   background: $error-bg;
   color: $error-text;

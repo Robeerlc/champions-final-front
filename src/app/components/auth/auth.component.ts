@@ -33,11 +33,10 @@ export class AuthComponent {
     });
 
     const allowed = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžæÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'\-]+$/;
-    const v = [Validators.required, Validators.pattern(allowed)];
     this.registerForm = this.fb.group({
-      fullName: ['', v],
-      username: ['', v],
-      password: ['', v],
+      fullName: ['', [Validators.required, Validators.pattern(allowed)]],
+      username: ['', [Validators.required, Validators.pattern(allowed)]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
       country: ['SPAIN', Validators.required]
     });
     this.registerForm.get('country')!.disable();

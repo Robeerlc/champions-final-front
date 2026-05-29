@@ -56,6 +56,9 @@
     <div class="field-group">
       <div class="section-label">Nombre completo</div>
       <input type="text" formControlName="fullName" class="field-input" placeholder="Tu nombre">
+      <div class="field-error" *ngIf="registerForm.get('fullName')?.touched && registerForm.get('fullName')?.hasError('pattern')">
+        El nombre completo es inválido
+      </div>
     </div>
 
     <div class="field-group">
@@ -64,6 +67,9 @@
         <input type="text" formControlName="username" class="field-input username-input"
                placeholder="usuario.apellidos" autocomplete="username" spellcheck="false">
         <span class="email-domain">@metrica-global.com</span>
+      </div>
+      <div class="field-error" *ngIf="registerForm.get('username')?.touched && registerForm.get('username')?.hasError('pattern')">
+        El usuario es inválido
       </div>
     </div>
 
@@ -80,6 +86,9 @@
             <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>
           </svg>
         </button>
+      </div>
+      <div class="field-error" *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.hasError('minlength')">
+        La contraseña debe tener al menos 6 caracteres
       </div>
     </div>
 
