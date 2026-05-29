@@ -127,7 +127,7 @@ $error-text: #f85149;
 
 .ranking-table {
   width: 100%;
-  min-width: 480px;
+  min-width: 600px;
   border-collapse: collapse;
   table-layout: fixed;
 
@@ -180,7 +180,7 @@ $error-text: #f85149;
 }
 
 .col-pos    { width: 52px; }
-.col-name   { width: auto; }
+.col-name   { width: 200px; min-width: 200px; }
 .col-points { width: 80px; }
 .col-stat   {
   width: 56px;
