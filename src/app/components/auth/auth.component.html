@@ -83,6 +83,15 @@
       </div>
     </div>
 
+    <div class="field-group">
+      <div class="section-label">País</div>
+      <div class="select-wrap">
+        <select formControlName="country" class="field-input" disabled>
+          <option value="SPAIN">España</option>
+        </select>
+      </div>
+    </div>
+
     <div class="error-banner" *ngIf="error">{{ error }}</div>
 
     <button type="submit" class="submit-btn" [disabled]="registerForm.invalid || loading">

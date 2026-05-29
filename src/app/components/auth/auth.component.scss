@@ -208,6 +208,11 @@ $error-text: #f85149;
   &:hover { color: $accent; }
 }
 
+.field-input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .select-wrap {
   position: relative;
 
