@@ -23,8 +23,8 @@
     <h1 class="main-title">Tu pronóstico para la <span class="gold">Final</span></h1>
 
     <!-- APARTADO: YA VOTADO -->
-    <section *ngIf="existingPrediction">
-      <div class="predictions-section-title">Ya votado</div>
+    <section *ngIf="existingPrediction && !editMode">
+      <div class="predictions-section-title">Tu pronóstico</div>
       <div class="voted-card">
         <div class="voted-match-date">{{ match.startTime | localTime:'datetime':'es' }}</div>
         <div class="voted-teams">{{ match.homeTeam }} vs {{ match.awayTeam }}</div>
@@ -35,12 +35,13 @@
           Ganador: <strong>{{ existingPrediction.winningTeam }}</strong>
           <span *ngIf="existingPrediction.isDraw"> (empate en 90')</span>
         </div>
+        <button class="modify-btn" *ngIf="!isClosed" (click)="startEdit()">Modificar pronóstico</button>
       </div>
     </section>
 
-    <!-- APARTADO: POR VOTAR -->
-    <section *ngIf="!existingPrediction">
-      <div class="predictions-section-title">Por votar</div>
+    <!-- APARTADO: POR VOTAR / MODIFICAR -->
+    <section *ngIf="!existingPrediction || editMode">
+      <div class="predictions-section-title">{{ editMode ? 'Modificar pronóstico' : 'Por votar' }}</div>
 
       <p class="subtitle">{{ match.startTime | localTime:'datetime':'es' }}</p>
 
@@ -58,7 +59,7 @@
 
       <!-- CERRADO -->
       <div class="closed-banner" *ngIf="isClosed">
-        El plazo de envío ha cerrado — faltan menos de 24h para el partido
+        El plazo de envío ha cerrado — falta menos de 1h para el partido
       </div>
 
       <!-- FORM -->
@@ -127,9 +128,14 @@
           Tiempo restante para votar: <strong>{{ timeUntilDeadline }}</strong>
         </div>
 
-        <button type="submit" class="submit-btn" [disabled]="form.invalid">
-          Enviar mi pronóstico
-        </button>
+        <div class="form-actions">
+          <button type="submit" class="submit-btn" [disabled]="form.invalid">
+            {{ editMode ? 'Guardar cambios' : 'Enviar mi pronóstico' }}
+          </button>
+          <button type="button" class="cancel-btn" *ngIf="editMode" (click)="cancelEdit()">
+            Cancelar
+          </button>
+        </div>
 
       </form>
     </section>

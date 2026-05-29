@@ -30,17 +30,7 @@ export interface PublicPrediction {
   id: number;
   username: string;
   matchId: number;
-  homeGoals: number;
-  awayGoals: number;
-  pointsEarned: number;
-  isDraw: boolean;
-  winningTeam: string;
-}
-
-export interface UserPrediction {
-  id: number;
-  userId: number;
-  matchId: number;
+  isLocked: boolean;
   homeGoals: number;
   awayGoals: number;
   pointsEarned: number;

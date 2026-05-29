@@ -5,7 +5,7 @@ import { timer, forkJoin } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatchService } from '../../services/match.service';
 import { PronosticoService } from '../../services/pronostico.service';
-import { Match, Pronostico, TournamentPhase, UserPrediction } from '../../models/match.model';
+import { Match, Pronostico, TournamentPhase, PublicPrediction } from '../../models/match.model';
 import { LocalTimePipe } from '../../pipes/local-time.pipe';
 
 @Component({
@@ -18,7 +18,8 @@ import { LocalTimePipe } from '../../pipes/local-time.pipe';
 export class FinalFormComponent implements OnInit {
   form!: FormGroup;
   match: Match | null = null;
-  existingPrediction: UserPrediction | null = null;
+  existingPrediction: PublicPrediction | null = null;
+  editMode = false;
   loading = true;
   error: string | null = null;
 
@@ -128,7 +129,7 @@ export class FinalFormComponent implements OnInit {
 
   get timeUntilDeadline(): string {
     if (!this.match) return '';
-    const msLeft = new Date(this.match.startTime).getTime() - Date.now() - 24 * 60 * 60 * 1000;
+    const msLeft = new Date(this.match.startTime).getTime() - Date.now() - 1 * 60 * 60 * 1000;
     if (msLeft <= 0) return '';
     const totalMin = Math.floor(msLeft / 60_000);
     const days  = Math.floor(totalMin / (60 * 24));
@@ -143,7 +144,7 @@ export class FinalFormComponent implements OnInit {
     if (!this.match) return false;
     if (this.match.isLocked) return true;
     const hoursUntil = (new Date(this.match.startTime).getTime() - Date.now()) / (1000 * 60 * 60);
-    return hoursUntil <= 24;
+    return hoursUntil <= 1;
   }
 
   get isDraw(): boolean {
@@ -156,6 +157,26 @@ export class FinalFormComponent implements OnInit {
     }
     
     return Number(h) === Number(a);
+  }
+
+  startEdit(): void {
+    if (!this.existingPrediction) return;
+    this.form.patchValue({
+      homeGoals: this.existingPrediction.homeGoals,
+      awayGoals: this.existingPrediction.awayGoals,
+      winningTeam: this.existingPrediction.winningTeam
+    });
+    this.syncWinningTeamValidator();
+    this.editMode = true;
+    this.error = null;
+    this.cdr.markForCheck();
+  }
+
+  cancelEdit(): void {
+    this.editMode = false;
+    this.error = null;
+    this.form.reset();
+    this.cdr.markForCheck();
   }
 
   onSubmit(): void {
@@ -174,13 +195,14 @@ export class FinalFormComponent implements OnInit {
     this.pronosticoService.enviarPronostico(pronostico).subscribe({
       next: (saved: any) => {
         this.existingPrediction = saved ?? {
-          id: 0, userId: 0, matchId: this.match!.id,
+          ...this.existingPrediction,
           homeGoals: pronostico.homeGoals,
           awayGoals: pronostico.awayGoals,
-          pointsEarned: 0,
           isDraw: draw,
           winningTeam: pronostico.winningTeam
         };
+        this.editMode = false;
+        this.form.reset();
         this.cdr.markForCheck();
       },
       error: (err) => {

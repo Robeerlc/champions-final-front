@@ -71,18 +71,18 @@ export class UpcomingMatchesComponent implements OnInit {
     return (new Date(match.startTime).getTime() - Date.now()) / (1000 * 60 * 60);
   }
 
-  // Deadline = 24h before kickoff
-  // 0 = normal (>48h to go), 1 = closed (≤24h to go)
+  // Deadline = 1h before kickoff
+  // 0 = normal (>2h to go), 1 = closed (≤1h to go)
   urgency(match: Match): number {
     if (match.isLocked) return 1;
     const h = this.hoursUntil(match);
-    if (h <= 24) return 1;  // past deadline
-    if (h >= 48) return 0;  // more than 24h until deadline
-    return 1 - (h - 24) / 24; // gradient between 48h and 24h
+    if (h <= 1) return 1;  // past deadline
+    if (h >= 2) return 0;  // more than 1h until deadline
+    return 1 - (h - 1); // gradient between 2h and 1h
   }
 
   isClosedForPredictions(match: Match): boolean {
-    return match.isLocked || this.hoursUntil(match) <= 24;
+    return match.isLocked || this.hoursUntil(match) <= 1;
   }
 
   // Interpolate border: #30363d → #da3633
@@ -100,7 +100,7 @@ export class UpcomingMatchesComponent implements OnInit {
   }
 
   urgencyLabel(match: Match): string {
-    const hToDeadline = this.hoursUntil(match) - 24;
+    const hToDeadline = this.hoursUntil(match) - 1;
     if (hToDeadline <= 0)  return 'Cerrado';
     if (hToDeadline < 1)   return `Cierra en ${Math.round(hToDeadline * 60)}min`;
     return `Cierra en ${Math.round(hToDeadline)}h`;
