@@ -18,6 +18,8 @@ export class AuthComponent {
   error: string | null = null;
   loading = false;
   showRegisterPassword = false;
+  showSuccessModal = false;
+  registeredEmail = '';
 
   constructor(
     private fb: FormBuilder,
@@ -45,6 +47,11 @@ export class AuthComponent {
     this.error = null;
   }
 
+  closeSuccessModal(): void {
+    this.showSuccessModal = false;
+    this.setMode('login');
+  }
+
   onLogin(): void {
     if (this.loginForm.invalid) return;
     this.loading = true;
@@ -70,14 +77,10 @@ export class AuthComponent {
     const email = `${username}@metrica-global.com`;
     this.authService.register({ email, password, fullName, country }).subscribe({
       next: () => {
-        this.authService.login({ email, password }).subscribe({
-          next: () => { this.router.navigate(['/pronostico']); },
-          error: () => {
-            this.loading = false;
-            this.setMode('login');
-            this.cdr.markForCheck();
-          }
-        });
+        this.registeredEmail = email;
+        this.showSuccessModal = true;
+        this.loading = false;
+        this.cdr.markForCheck();
       },
       error: (err) => {
         this.error = err?.error?.message || 'Error al registrarse.';

@@ -107,3 +107,17 @@
   </form>
 
 </div>
+
+<!-- MODAL REGISTRO EXITOSO -->
+<div class="modal-overlay" *ngIf="showSuccessModal" (click)="closeSuccessModal()">
+  <div class="modal-card" (click)="$event.stopPropagation()">
+    <div class="modal-icon">✉️</div>
+    <h2 class="modal-title">¡Cuenta creada!</h2>
+    <p class="modal-body">
+      Comprueba el correo corporativo de la cuenta:
+    </p>
+    <div class="modal-email">{{ registeredEmail }}</div>
+    <p class="modal-hint">Puede que tarde unos minutos en llegar.</p>
+    <button class="submit-btn" (click)="closeSuccessModal()">Entendido, ir al login</button>
+  </div>
+</div>

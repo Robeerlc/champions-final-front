@@ -70,8 +70,8 @@ export class FinalFormComponent implements OnInit {
       c.value !== null && !Number.isInteger(Number(c.value)) ? { integer: true } : null;
 
     this.form = this.fb.group({
-      homeGoals: [null, [Validators.required, Validators.min(0), integer]],
-      awayGoals: [null, [Validators.required, Validators.min(0), integer]],
+      homeGoals: [null, [Validators.required, Validators.min(0), Validators.max(30), integer]],
+      awayGoals: [null, [Validators.required, Validators.min(0), Validators.max(30), integer]],
       winningTeam: ['', Validators.required]
     });
   }
