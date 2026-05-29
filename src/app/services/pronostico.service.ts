@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Pronostico, UserPrediction } from '../models/match.model';
+import { Pronostico, UserPrediction, PublicPrediction } from '../models/match.model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,5 +17,9 @@ export class PronosticoService {
 
   getMyPredictions(): Observable<UserPrediction[]> {
     return this.http.get<UserPrediction[]>(`${this.baseUrl}/predictions/me`);
+  }
+
+  getAllPredictions(): Observable<PublicPrediction[]> {
+    return this.http.get<PublicPrediction[]>(`${this.baseUrl}/predictions`);
   }
 }

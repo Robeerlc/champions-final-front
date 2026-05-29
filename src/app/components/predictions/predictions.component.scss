@@ -1,0 +1,243 @@
+$bg-card: #161b22;
+$bg-input: #0d1117;
+$border: #30363d;
+$border-subtle: rgba(255, 255, 255, 0.08);
+$text-primary: #ffffff;
+$text-secondary: #c9d1d9;
+$text-muted: #8b949e;
+$accent: #58a6ff;
+$error-bg: #1a0000;
+$error-border: #da3633;
+$error-text: #f85149;
+
+:host {
+  display: block;
+  color: $text-primary;
+}
+
+.predictions-wrap {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+
+.predictions-header {
+  margin-bottom: 2rem;
+}
+
+.predictions-title {
+  font-size: 2rem;
+  font-weight: 900;
+  color: $text-primary;
+  margin-bottom: 0.25rem;
+}
+
+.predictions-subtitle {
+  font-size: 14px;
+  color: $text-muted;
+}
+
+.loading-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: $text-muted;
+
+  .spinner {
+    width: 28px;
+    height: 28px;
+    border: 2px solid $border;
+    border-top-color: $accent;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 1rem;
+  }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.error-banner {
+  background: $error-bg;
+  color: $error-text;
+  border: 1px solid $error-border;
+  border-radius: 6px;
+  padding: 0.65rem 0.9rem;
+  font-size: 13px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: $text-muted;
+  font-size: 14px;
+  background: $bg-card;
+  border: 1px solid $border-subtle;
+  border-radius: 10px;
+  line-height: 1.6;
+}
+
+.match-group {
+  margin-bottom: 1.75rem;
+}
+
+.match-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.9rem 1rem;
+  background: $bg-card;
+  border: 1px solid $border-subtle;
+  border-bottom: none;
+  border-radius: 10px 10px 0 0;
+}
+
+.match-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.phase-tag {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $accent;
+  background: rgba($accent, 0.1);
+  border: 1px solid rgba($accent, 0.25);
+  border-radius: 4px;
+  padding: 2px 7px;
+}
+
+.match-date {
+  font-size: 12px;
+  color: $text-muted;
+  text-transform: capitalize;
+}
+
+.match-teams {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 14px;
+  font-weight: 700;
+  color: $text-primary;
+}
+
+.vs {
+  font-size: 11px;
+  font-weight: 400;
+  color: $text-muted;
+}
+
+.pred-count {
+  font-size: 12px;
+  color: $text-muted;
+  white-space: nowrap;
+}
+
+.table-wrapper {
+  background: $bg-card;
+  border: 1px solid $border-subtle;
+  border-radius: 0 0 10px 10px;
+  overflow-x: auto;
+  overflow-y: auto;
+  max-height: 320px;
+
+  &::-webkit-scrollbar        { width: 6px; height: 6px; }
+  &::-webkit-scrollbar-track  { background: $bg-card; border-radius: 10px; }
+  &::-webkit-scrollbar-thumb  { background: $border; border-radius: 10px; &:hover { background: $accent; } }
+  &::-webkit-scrollbar-corner { background: $bg-card; }
+  scrollbar-width: thin;
+  scrollbar-color: $border $bg-card;
+}
+
+.pred-table {
+  width: max-content;
+  min-width: 100%;
+  border-collapse: collapse;
+  table-layout: auto;
+
+  thead {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: $bg-card;
+    border-bottom: 1px solid $border-subtle;
+
+    th {
+      padding: 10px 16px;
+      font-size: 11px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.5);
+      text-align: left;
+      white-space: nowrap;
+    }
+  }
+
+  tbody {
+    tr {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      &:last-child { border-bottom: none; }
+      &:hover { filter: brightness(1.12); }
+    }
+
+    td {
+      padding: 12px 16px;
+      text-align: left;
+      white-space: nowrap;
+      font-size: 14px;
+    }
+  }
+}
+
+.col-user {
+  font-weight: 600;
+  color: $text-primary;
+}
+
+.col-score {
+  font-size: 15px;
+  font-weight: 700;
+  color: $text-primary;
+  letter-spacing: 0.05em;
+}
+
+.col-winner {
+  color: $text-secondary;
+}
+
+.draw-tag {
+  font-size: 11px;
+  color: $text-muted;
+  margin-left: 4px;
+}
+
+.col-points {
+  text-align: center;
+}
+
+.points-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  background: rgba(#3fb950, 0.12);
+  color: #3fb950;
+  border: 1px solid rgba(#3fb950, 0.3);
+
+  &.zero {
+    background: rgba(255, 255, 255, 0.04);
+    color: $text-muted;
+    border-color: $border;
+  }
+}

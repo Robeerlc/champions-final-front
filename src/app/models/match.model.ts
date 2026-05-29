@@ -26,6 +26,18 @@ export interface Pronostico {
   winningTeam: string;
 }
 
+export interface PublicPrediction {
+  id: number;
+  username: string;
+  matchId: number;
+  isLocked: boolean;
+  homeGoals: number;
+  awayGoals: number;
+  pointsEarned: number;
+  isDraw: boolean;
+  winningTeam: string;
+}
+
 export interface UserPrediction {
   id: number;
   userId: number;
