@@ -106,11 +106,13 @@
           </svg>
         </button>
       </div>
-      <div class="field-error" *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.hasError('pattern')">
-        La contraseña contiene caracteres no permitidos
-      </div>
-      <div class="field-error" *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.hasError('minlength')">
-        La contraseña debe tener al menos 6 caracteres
+      <div class="password-rules">
+        <div class="rule" [class.met]="pwVal.length >= 6" [class.unmet]="pwVal.length > 0 && pwVal.length < 6">
+          Mínimo 6 caracteres
+        </div>
+        <div class="rule" [class.met]="pwVal.length > 0 && pwVal.length <= 100" [class.unmet]="pwVal.length > 100">
+          Máximo 100 caracteres
+        </div>
       </div>
     </div>
 

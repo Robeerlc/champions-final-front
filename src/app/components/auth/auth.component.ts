@@ -34,15 +34,18 @@ export class AuthComponent {
     });
 
     const allowed = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžæÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'\-]+$/;
-    const allowedPassword = /^[a-zA-Z0-9àáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžæÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'\-]+$/;
     this.registerForm = this.fb.group({
       firstName: ['', [Validators.required, Validators.pattern(allowed)]],
       lastName: ['', [Validators.required, Validators.pattern(allowed)]],
       username: ['', [Validators.required, Validators.pattern(allowed)]],
-      password: ['', [Validators.required, Validators.minLength(6), Validators.pattern(allowedPassword)]],
+      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(100)]],
       country: ['SPAIN', Validators.required]
     });
     this.registerForm.get('country')!.disable();
+  }
+
+  get pwVal(): string {
+    return this.registerForm.get('password')?.value ?? '';
   }
 
   setMode(mode: 'login' | 'register'): void {
