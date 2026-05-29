@@ -62,6 +62,7 @@ export class FinalFormComponent implements OnInit {
       ctrl.setValue(this.winner, { emitEvent: false });
     }
     ctrl.updateValueAndValidity();
+    this.form.updateValueAndValidity();
     this.cdr.markForCheck();
   }
 
